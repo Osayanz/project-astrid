@@ -1,0 +1,152 @@
+ASTRID — Model Evaluation Report
+=======================================================
+
+=======================================================
+Stage 1  (25 features, 1280 train / 320 test)
+=======================================================
+Regression  (predict final_mark 0–100)
+  MAE        : 6.22 marks  (on average, off by 6.2 marks)
+  R²         : 0.778  (1.0 = perfect, 0 = no better than mean)
+  CV-MAE     : 6.44 marks  (5-fold cross-validation)
+
+Classification  (predict High / Medium / Low risk)
+  Accuracy   : 75.6%
+  CV-Accuracy: 76.9%  (5-fold cross-validation)
+
+Classification report:
+              precision    recall  f1-score   support
+
+        High       0.80      0.76      0.78        84
+         Low       0.93      0.77      0.84       153
+      Medium       0.53      0.72      0.61        83
+
+    accuracy                           0.76       320
+   macro avg       0.75      0.75      0.75       320
+weighted avg       0.79      0.76      0.77       320
+
+Top 10 features by importance:
+  0.472  q1_accuracy
+  0.393  q1_score_pct
+  0.030  q1_avg_time_sec
+  0.010  q1_slow_wrong_ratio
+  0.009  q1_easy_accuracy
+  0.009  q1_num_topics_below_50pct
+  0.008  q1_medium_accuracy
+  0.007  q1_hard_accuracy
+  0.006  q1_topic_Arrays
+  0.006  q1_topic_Functions
+
+=======================================================
+Stage 2  (51 features, 1280 train / 320 test)
+=======================================================
+Regression  (predict final_mark 0–100)
+  MAE        : 5.98 marks  (on average, off by 6.0 marks)
+  R²         : 0.796  (1.0 = perfect, 0 = no better than mean)
+  CV-MAE     : 5.97 marks  (5-fold cross-validation)
+
+Classification  (predict High / Medium / Low risk)
+  Accuracy   : 77.8%
+  CV-Accuracy: 77.8%  (5-fold cross-validation)
+
+Classification report:
+              precision    recall  f1-score   support
+
+        High       0.81      0.80      0.80        84
+         Low       0.95      0.79      0.86       153
+      Medium       0.56      0.73      0.64        83
+
+    accuracy                           0.78       320
+   macro avg       0.77      0.77      0.77       320
+weighted avg       0.81      0.78      0.79       320
+
+Top 10 features by importance:
+  0.430  q1_score_pct
+  0.390  q1_accuracy
+  0.021  q2_accuracy
+  0.020  q2_score_pct
+  0.013  q2_avg_time_sec
+  0.013  q1_avg_time_sec
+  0.008  q2_slow_wrong_ratio
+  0.006  q2_num_topics_below_50pct
+  0.005  trend_q1_q2
+  0.005  q2_hard_accuracy
+
+=======================================================
+Stage 3  (78 features, 1280 train / 320 test)
+=======================================================
+Regression  (predict final_mark 0–100)
+  MAE        : 5.36 marks  (on average, off by 5.4 marks)
+  R²         : 0.836  (1.0 = perfect, 0 = no better than mean)
+  CV-MAE     : 5.40 marks  (5-fold cross-validation)
+
+Classification  (predict High / Medium / Low risk)
+  Accuracy   : 82.2%
+  CV-Accuracy: 82.7%  (5-fold cross-validation)
+
+Classification report:
+              precision    recall  f1-score   support
+
+        High       0.86      0.82      0.84        84
+         Low       0.95      0.83      0.89       153
+      Medium       0.63      0.81      0.71        83
+
+    accuracy                           0.82       320
+   macro avg       0.81      0.82      0.81       320
+weighted avg       0.85      0.82      0.83       320
+
+Top 10 features by importance:
+  0.417  q1_accuracy
+  0.368  q1_score_pct
+  0.030  q3_accuracy
+  0.029  q3_score_pct
+  0.015  q2_accuracy
+  0.014  q2_score_pct
+  0.007  q1_avg_time_sec
+  0.006  q3_avg_time_sec
+  0.006  q3_slow_wrong_ratio
+  0.006  q2_avg_time_sec
+
+=======================================================
+Stage 4  (100 features, 1280 train / 320 test)
+=======================================================
+Regression  (predict final_mark 0–100)
+  MAE        : 4.22 marks  (on average, off by 4.2 marks)
+  R²         : 0.903  (1.0 = perfect, 0 = no better than mean)
+  CV-MAE     : 4.42 marks  (5-fold cross-validation)
+
+Classification  (predict High / Medium / Low risk)
+  Accuracy   : 87.5%
+  CV-Accuracy: 85.8%  (5-fold cross-validation)
+
+Classification report:
+              precision    recall  f1-score   support
+
+        High       0.91      0.92      0.91        84
+         Low       0.95      0.88      0.92       153
+      Medium       0.73      0.82      0.77        83
+
+    accuracy                           0.88       320
+   macro avg       0.86      0.87      0.87       320
+weighted avg       0.88      0.88      0.88       320
+
+Top 10 features by importance:
+  0.372  q1_score_pct
+  0.284  q1_accuracy
+  0.096  q4_score_pct
+  0.091  q4_accuracy
+  0.023  q3_score_pct
+  0.022  q3_accuracy
+  0.009  q2_score_pct
+  0.009  q2_accuracy
+  0.006  q1_avg_time_sec
+  0.005  q2_hard_accuracy
+
+
+Summary
+--------------------------------------------------------
+Stage         MAE       R²     CV-MAE     Acc%    CV-Acc%
+--------------------------------------------------------
+  Q1        6.22   0.778      6.44    75.6%      76.9%
+  Q2        5.98   0.796      5.97    77.8%      77.8%
+  Q3        5.36   0.836      5.40    82.2%      82.7%
+  Q4        4.22   0.903      4.42    87.5%      85.8%

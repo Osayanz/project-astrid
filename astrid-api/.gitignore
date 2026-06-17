@@ -1,0 +1,24 @@
+cat > .gitignore << 'EOF'
+# Python
+__pycache__/
+*.pyc
+.venv/
+astrid-ml/data/
+astrid-ml/models/
+
+# Node
+node_modules/
+dist/
+.next/
+
+# Environment — NEVER push these
+.env
+*.env
+.env.local
+
+# Mac
+.DS_Store
+
+# VS Code
+.vscode/
+EOF
