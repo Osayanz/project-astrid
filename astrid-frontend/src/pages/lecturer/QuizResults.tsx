@@ -5,6 +5,7 @@ import {
 } from "../../lib/api/overview";
 import type { QuizOverview, QuizStudentRow } from "../../lib/api/overview";
 import AppHeader from "../../components/AppHeader";
+import { sendCard } from "../../lib/api/notifications";
 
 const RISK_STYLE: Record<string, string> = {
   High:   "bg-red-50 text-red-700 border-red-200",
@@ -19,6 +20,24 @@ export default function QuizResults() {
   const [loading, setLoading] = useState(true);
   const [popup,   setPopup]   = useState<{ student: QuizStudentRow; topics: { topic: string; wrong_percentage: number }[] } | null>(null);
   const [popupLoading, setPopupLoading] = useState(false);
+  const [cardMsg, setCardMsg] = useState("");
+  const [cardSending, setCardSending] = useState<"yellow" | "red" | null>(null);
+  const [cardSent, setCardSent] = useState<string | null>(null);
+
+  const issueCard = async (severity: "yellow" | "red") => {
+    if (!popup) return;
+    setCardSending(severity);
+    setCardSent(null);
+    try {
+      await sendCard(popup.student.student_id, severity, cardMsg.trim() || undefined);
+      setCardSent(`${severity === "yellow" ? "Yellow" : "Red"} card sent to ${popup.student.name}.`);
+      setCardMsg("");
+    } catch {
+      setCardSent("Failed to send card. Please try again.");
+    } finally {
+      setCardSending(null);
+    }
+  };
 
   useEffect(() => {
     if (!id) return;
@@ -28,6 +47,8 @@ export default function QuizResults() {
   const openStudent = async (student: QuizStudentRow) => {
     setPopupLoading(true);
     setPopup({ student, topics: [] });
+    setCardMsg("");
+    setCardSent(null);
     try {
       const t = await getAttemptWeakTopics(student.attempt_id);
       setPopup({ student, topics: t.filter((x) => x.wrong_percentage > 0) });
@@ -170,6 +191,37 @@ export default function QuizResults() {
                 ))}
               </div>
             )}
+
+            {/* ── warning card ── */}
+            <div className="border-t mt-5 pt-4">
+              <p className="text-xs font-medium text-gray-500 mb-2">Send a warning card</p>
+              <textarea
+                value={cardMsg}
+                onChange={(e) => setCardMsg(e.target.value)}
+                rows={2}
+                placeholder="Optional message (a default warning is used if left blank)…"
+                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black resize-none"
+              />
+              <div className="flex gap-2 mt-2">
+                <button
+                  onClick={() => issueCard("yellow")}
+                  disabled={cardSending !== null}
+                  className="flex-1 rounded-lg border border-amber-300 bg-amber-50 text-amber-800 py-2 text-sm font-medium hover:bg-amber-100 disabled:opacity-50"
+                >
+                  {cardSending === "yellow" ? "Sending…" : "🟨 Yellow card"}
+                </button>
+                <button
+                  onClick={() => issueCard("red")}
+                  disabled={cardSending !== null}
+                  className="flex-1 rounded-lg border border-red-300 bg-red-50 text-red-800 py-2 text-sm font-medium hover:bg-red-100 disabled:opacity-50"
+                >
+                  {cardSending === "red" ? "Sending…" : "🟥 Red card"}
+                </button>
+              </div>
+              {cardSent && (
+                <p className="text-xs text-gray-600 mt-2">{cardSent}</p>
+              )}
+            </div>
           </div>
         </div>
       )}

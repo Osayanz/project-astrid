@@ -38,6 +38,8 @@ export default function Login() {
 
       if (s?.role === "lecturer") {
         nav("/lecturer");
+      } else if (s?.role === "admin") {
+        nav("/admin");
       } else {
         nav("/dashboard");
       }

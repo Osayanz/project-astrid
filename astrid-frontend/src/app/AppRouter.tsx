@@ -12,6 +12,10 @@ import CreateQuiz from "../pages/lecturer/CreateQuiz";
 import AddQuestion from "../pages/lecturer/AddQuestion";
 import LecturerQuizList from "../pages/lecturer/LecturerQuizList";
 import Subjects from "../pages/lecturer/Subjects";
+import Chat from "../pages/student/Chat";
+import AdminDashboard from "../pages/admin/AdminDashboard";
+import AdminYearSubjects from "../pages/admin/AdminYearSubjects";
+import AdminSubjectPerformance from "../pages/admin/AdminSubjectPerformance";
 
 export default function AppRouter() {
   return (
@@ -108,7 +112,24 @@ export default function AppRouter() {
             <SubjectDetail />
           </ProtectedRoute>
         }
-/>
+      />
+      <Route
+        path="/chat"
+        element={
+          <ProtectedRoute>
+            <Chat />
+          </ProtectedRoute>
+        }
+      />
+      <Route path="/admin" element={
+        <ProtectedRoute roles={["admin"]}><AdminDashboard /></ProtectedRoute>
+      } />
+      <Route path="/admin/year/:year" element={
+        <ProtectedRoute roles={["admin"]}><AdminYearSubjects /></ProtectedRoute>
+      } />
+      <Route path="/admin/subject/:id" element={
+        <ProtectedRoute roles={["admin"]}><AdminSubjectPerformance /></ProtectedRoute>
+      } />
     </Routes>
   );
 }

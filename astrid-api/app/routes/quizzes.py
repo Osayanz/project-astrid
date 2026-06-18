@@ -37,6 +37,14 @@ def create_quiz(payload: schemas.QuizCreate, db: Session = Depends(get_db), auth
     db.add(quiz)
     db.commit()
     db.refresh(quiz)
+
+    # notify eligible students that a new quiz is available
+    try:
+        from ..notify import notify_new_quiz
+        notify_new_quiz(db, quiz)
+    except Exception as e:
+        print(f"[quizzes] notify_new_quiz failed: {e}")
+
     return quiz
 
 @router.post("/{quiz_id}/questions", response_model=schemas.QuestionOut)

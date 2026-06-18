@@ -4,7 +4,7 @@ import { token } from "./token";
 type JwtPayload = {
   sub?: string;
   email?: string;
-  role?: "student" | "lecturer";
+  role?: "student" | "lecturer" | "admin";
   exp?: number;
 };
 

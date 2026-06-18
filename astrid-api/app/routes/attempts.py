@@ -155,6 +155,13 @@ def submit_attempt(
     db.commit()
     db.refresh(attempt)
 
+    # create a notification summarising weak topics for this attempt
+    try:
+        from ..notify import notify_weak_topics
+        notify_weak_topics(db, attempt)
+    except Exception as e:
+        print(f"[attempts] notify_weak_topics failed: {e}")
+
     return {
         "attempt_id": attempt.id,
         "score": attempt.score,
