@@ -169,7 +169,7 @@ export default function QuizPlay() {
         <p className="text-red-600 mb-4">{error}</p>
         <button
           onClick={() => navigate("/dashboard")}
-          className="rounded-lg bg-black text-white px-4 py-2 hover:opacity-90"
+          className="rounded-lg bg-[var(--brand)] text-white px-4 py-2 hover:opacity-90"
         >
           Back to dashboard
         </button>
@@ -180,7 +180,7 @@ export default function QuizPlay() {
   if (!current) return null;
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-[var(--paper)] flex flex-col">
 
       {/* ── top bar ── */}
       <div className="bg-white border-b px-6 py-3 flex items-center justify-between">
@@ -197,7 +197,7 @@ export default function QuizPlay() {
       {/* ── progress bar ── */}
       <div className="h-1 bg-gray-200">
         <div
-          className="h-1 bg-black transition-all duration-300"
+          className="h-1 bg-[var(--brand)] transition-all duration-300"
           style={{ width: `${progress}%` }}
         />
       </div>
@@ -225,7 +225,7 @@ export default function QuizPlay() {
                 onClick={() => handleSelect(label)}
                 className={`w-full text-left flex items-center gap-4 rounded-xl border p-4 transition-all
                   ${selected === label
-                    ? "border-black bg-black text-white"
+                    ? "border-[var(--brand)] bg-[var(--brand)] text-white"
                     : "border-gray-200 bg-white hover:border-gray-400"
                   }`}
               >
@@ -257,7 +257,7 @@ export default function QuizPlay() {
               <button
                 onClick={handleSubmit}
                 disabled={!selected || submitting}
-                className="rounded-lg bg-black text-white px-8 py-3 font-medium hover:opacity-90 disabled:opacity-40"
+                className="rounded-lg bg-[var(--brand)] text-white px-8 py-3 font-medium hover:opacity-90 disabled:opacity-40"
               >
                 {submitting ? "Submitting..." : "Submit quiz"}
               </button>
@@ -265,7 +265,7 @@ export default function QuizPlay() {
               <button
                 onClick={handleNext}
                 disabled={!selected}
-                className="rounded-lg bg-black text-white px-8 py-3 font-medium hover:opacity-90 disabled:opacity-40"
+                className="rounded-lg bg-[var(--brand)] text-white px-8 py-3 font-medium hover:opacity-90 disabled:opacity-40"
               >
                 Next question →
               </button>

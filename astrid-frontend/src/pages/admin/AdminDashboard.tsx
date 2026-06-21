@@ -62,7 +62,7 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-[var(--paper)] p-6">
       <AppHeader title="Admin Dashboard" />
 
       <div className="max-w-5xl mx-auto grid gap-6 lg:grid-cols-5">
@@ -80,7 +80,7 @@ export default function AdminDashboard() {
                 <input
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+                  className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--brand)]"
                   placeholder="Jane Doe"
                 />
               </div>
@@ -89,7 +89,7 @@ export default function AdminDashboard() {
                 <input
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+                  className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--brand)]"
                   placeholder="jane@example.com"
                 />
               </div>
@@ -99,7 +99,7 @@ export default function AdminDashboard() {
                   type="text"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+                  className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--brand)]"
                   placeholder="At least 6 characters"
                 />
               </div>
@@ -111,7 +111,7 @@ export default function AdminDashboard() {
                 <select
                   value={enrollYear}
                   onChange={(e) => setEnrollYear(e.target.value)}
-                  className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+                  className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--brand)]"
                 >
                   <option value="">Select year…</option>
                   {yearOptions.map((y) => (
@@ -136,7 +136,7 @@ export default function AdminDashboard() {
 
               <button
                 disabled={submitting}
-                className="w-full rounded-lg bg-black text-white py-2 font-medium hover:opacity-90 disabled:opacity-50"
+                className="w-full rounded-lg bg-[var(--brand)] text-white py-2 font-medium hover:opacity-90 disabled:opacity-50"
               >
                 {submitting ? "Adding…" : "Add student"}
               </button>

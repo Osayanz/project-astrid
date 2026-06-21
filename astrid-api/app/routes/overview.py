@@ -14,6 +14,10 @@ routes/overview.py  —  Astrid API (Update 2)
   GET /quizzes/{quiz_id}/overview
       → lecturer quiz analysis: attempted/eligible counts, class averages,
         risk distribution, per-student rows (with attempt_id for popups)
+
+  GET /students/me/journey
+      → student "My Journey": per-subject, per-quiz score history (ordered)
+        + predicted final at each step, for progression charts
 """
 
 from datetime       import datetime
@@ -345,3 +349,100 @@ def quiz_overview(quiz_id: UUID, db: Session = Depends(get_db),
         risk_counts=risk_counts,
         students=students,
     )
+
+# ══════════════════════════════════════════════════════════════════════
+# STUDENT — journey: per-subject, per-quiz score history (read-only)
+#   Powers the student "My Journey" tab. Returns each completed quiz in
+#   order so the frontend can draw a score-over-quizzes progression, plus
+#   the predicted final score recorded at each step.
+# ══════════════════════════════════════════════════════════════════════
+class JourneyQuizPoint(BaseModel):
+    quiz_id:               UUID
+    quiz_number:           Optional[int]
+    title:                 str
+    score_percentage:      Optional[float]
+    predicted_final_score: Optional[float]
+    risk_level:            Optional[str]
+    submitted_at:          Optional[datetime]
+
+class JourneySubject(BaseModel):
+    subject_id:            Optional[UUID]
+    subject_name:          str
+    quizzes_total:         int
+    quizzes_completed:     int
+    average_score:         Optional[float]
+    latest_predicted:      Optional[float]
+    latest_risk:           Optional[str]
+    weak_topics:           List[str]
+    strong_topics:         List[str]
+    points:                List[JourneyQuizPoint]
+
+
+@router.get("/students/me/journey", response_model=List[JourneySubject])
+def my_journey(db: Session = Depends(get_db), authorization: str = Header(None)):
+    user = _user(authorization)
+    if user["role"] != "student":
+        raise HTTPException(status_code=403, detail="Students only")
+    sid = UUID(user["sub"])
+
+    rows = (
+        db.query(models.Attempt, models.Quiz)
+        .join(models.Quiz, models.Attempt.quiz_id == models.Quiz.id)
+        .filter(models.Attempt.student_id == sid,
+                models.Attempt.score_percentage.isnot(None))
+        .order_by(models.Quiz.quiz_number)
+        .all()
+    )
+
+    by_subject: dict = {}
+    for att, quiz in rows:
+        key = str(quiz.subject_id) if quiz.subject_id else "none"
+        by_subject.setdefault(key, {"subject_id": quiz.subject_id, "rows": []})
+        by_subject[key]["rows"].append((att, quiz))
+
+    result: List[JourneySubject] = []
+    for key, grp in by_subject.items():
+        subject_name = "General"
+        quizzes_total = len(grp["rows"])
+        if grp["subject_id"]:
+            subj = db.query(models.Subject).filter(models.Subject.id == grp["subject_id"]).first()
+            if subj:
+                subject_name = subj.name
+            quizzes_total = (
+                db.query(models.Quiz)
+                .filter(models.Quiz.subject_id == grp["subject_id"]).count()
+            )
+
+        points: List[JourneyQuizPoint] = []
+        scores: List[float] = []
+        for att, quiz in grp["rows"]:
+            points.append(JourneyQuizPoint(
+                quiz_id               = quiz.id,
+                quiz_number           = quiz.quiz_number,
+                title                 = quiz.title,
+                score_percentage      = att.score_percentage,
+                predicted_final_score = att.predicted_final_score,
+                risk_level            = att.risk_level,
+                submitted_at          = att.submitted_at,
+            ))
+            if att.score_percentage is not None:
+                scores.append(att.score_percentage)
+
+        attempts_only = [a for a, _ in grp["rows"]]
+        risk, predicted, done = _latest_prediction(attempts_only)
+        attempt_ids = [a.id for a in attempts_only]
+        weak, strong = _weak_strong_topics(db, attempt_ids)
+
+        result.append(JourneySubject(
+            subject_id        = grp["subject_id"],
+            subject_name      = subject_name,
+            quizzes_total     = quizzes_total,
+            quizzes_completed = len(points),
+            average_score     = round(sum(scores) / len(scores), 1) if scores else None,
+            latest_predicted  = predicted,
+            latest_risk       = risk,
+            weak_topics       = weak[:5],
+            strong_topics     = strong[:5],
+            points            = points,
+        ))
+    return result

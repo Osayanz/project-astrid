@@ -1,4 +1,5 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+import Landing from "../pages/Landing";
 import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
 import StudentDashboard from "../pages/student/Dashboard";
@@ -16,11 +17,14 @@ import Chat from "../pages/student/Chat";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import AdminYearSubjects from "../pages/admin/AdminYearSubjects";
 import AdminSubjectPerformance from "../pages/admin/AdminSubjectPerformance";
+import StudentJourney from "../pages/student/Journey";
+import LecturerJourney from "../pages/lecturer/Journey";
+import AdminJourney from "../pages/admin/Journey";
 
 export default function AppRouter() {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/login" replace />} />
+      <Route path="/" element={<Landing />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
 
@@ -52,6 +56,15 @@ export default function AppRouter() {
       />
 
       <Route
+        path="/journey"
+        element={
+          <ProtectedRoute>
+            <StudentJourney />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
         path="/lecturer"
         element={
           <ProtectedRoute>
@@ -65,6 +78,15 @@ export default function AppRouter() {
         element={
           <ProtectedRoute>
             <LecturerQuizList />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/lecturer/journey"
+        element={
+          <ProtectedRoute>
+            <LecturerJourney />
           </ProtectedRoute>
         }
       />
@@ -123,6 +145,9 @@ export default function AppRouter() {
       />
       <Route path="/admin" element={
         <ProtectedRoute roles={["admin"]}><AdminDashboard /></ProtectedRoute>
+      } />
+      <Route path="/admin/journey" element={
+        <ProtectedRoute roles={["admin"]}><AdminJourney /></ProtectedRoute>
       } />
       <Route path="/admin/year/:year" element={
         <ProtectedRoute roles={["admin"]}><AdminYearSubjects /></ProtectedRoute>

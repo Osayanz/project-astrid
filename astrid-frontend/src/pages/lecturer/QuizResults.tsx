@@ -64,7 +64,7 @@ export default function QuizResults() {
     ? Math.round((data.attempted / data.eligible_total) * 100) : 0;
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-[var(--paper)] p-6">
       <AppHeader title={data.title} />
 
       <div className="max-w-5xl mx-auto space-y-6">
@@ -200,7 +200,7 @@ export default function QuizResults() {
                 onChange={(e) => setCardMsg(e.target.value)}
                 rows={2}
                 placeholder="Optional message (a default warning is used if left blank)…"
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black resize-none"
+                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--brand)] resize-none"
               />
               <div className="flex gap-2 mt-2">
                 <button

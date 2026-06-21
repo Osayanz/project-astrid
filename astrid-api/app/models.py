@@ -111,3 +111,14 @@ class Notification(Base):
     ref_id     = Column(UUID(as_uuid=True), nullable=True)
     is_read    = Column(Boolean, nullable=False, default=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+
+class Feedback(Base):
+    __tablename__ = "feedback"
+    id         = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    user_id    = Column(UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    role       = Column(String(20), nullable=True)
+    context    = Column(String(30), nullable=False)
+    quiz_id    = Column(UUID(as_uuid=True), ForeignKey("quizzes.id", ondelete="SET NULL"), nullable=True)
+    rating     = Column(Integer, nullable=False)
+    comment    = Column(Text, nullable=True)
+    created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)

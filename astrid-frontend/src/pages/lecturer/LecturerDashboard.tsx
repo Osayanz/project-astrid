@@ -12,10 +12,10 @@ export default function LecturerDashboard() {
   });
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-[var(--paper)] p-6">
       <AppHeader title="Lecturer Dashboard" />
 
-      <div className="max-w-4xl mx-auto space-y-6">
+      <div className="max-w-5xl mx-auto space-y-6">
 
         {/* actions */}
         <div className="flex gap-3">
@@ -27,7 +27,7 @@ export default function LecturerDashboard() {
           </button>
           <button
             onClick={() => navigate("/create-quiz")}
-            className="rounded-lg bg-black text-white px-4 py-2 text-sm hover:opacity-90"
+            className="rounded-lg bg-[var(--brand)] text-white px-4 py-2 text-sm hover:opacity-90"
           >
             Create New Quiz
           </button>

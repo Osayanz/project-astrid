@@ -44,7 +44,7 @@ export default function SubjectDetail() {
   if (!data)   return <div className="p-6 text-red-600">Subject not found.</div>;
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-[var(--paper)] p-6">
       <AppHeader title={data.subject_name} />
 
       <div className="max-w-5xl mx-auto space-y-6">

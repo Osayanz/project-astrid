@@ -4,6 +4,7 @@ import {
   listSubjects, createSubject, deleteSubject,
   listTopics, addTopic, deleteTopic,
 } from "../../lib/api/subjects";
+import AppHeader from "../../components/AppHeader";
 
 export default function Subjects() {
   const [subjects, setSubjects]   = useState<Subject[]>([]);
@@ -79,9 +80,9 @@ export default function Subjects() {
 
   // ── render ─────────────────────────────────────────────────────────
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4">
-      <div className="max-w-4xl mx-auto">
-
+    <div className="min-h-screen bg-[var(--paper)] p-6">
+      <AppHeader />
+      <div className="max-w-5xl mx-auto">
         <h1 className="text-2xl font-semibold mb-1">My subjects</h1>
         <p className="text-sm text-gray-500 mb-6">
           Add the subjects you teach and the topics under each. You'll pick
@@ -106,7 +107,7 @@ export default function Subjects() {
                 onChange={(e) => setNewSubject(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleAddSubject()}
                 placeholder="e.g. Programming Fundamentals"
-                className="flex-1 border rounded-lg px-3 py-2 text-sm outline-none focus:border-black"
+                className="flex-1 border rounded-lg px-3 py-2 text-sm outline-none focus:border-[var(--brand)]"
               />
             <select
                 value={newYear}
@@ -119,7 +120,7 @@ export default function Subjects() {
               <option value={4}>4th yr</option>
             </select>
               <button onClick={handleAddSubject}
-                className="rounded-lg bg-black text-white px-4 text-sm hover:opacity-90">
+                className="rounded-lg bg-[var(--brand)] text-white px-4 text-sm hover:opacity-90">
                 Add
               </button>
             </div>
@@ -136,7 +137,7 @@ export default function Subjects() {
                     onClick={() => setSelected(s)}
                     className={`flex items-center justify-between rounded-lg border p-3 cursor-pointer transition-colors ${
                       selected?.id === s.id
-                        ? "border-black bg-gray-50"
+                        ? "border-[var(--brand)] bg-gray-50"
                         : "border-gray-200 hover:border-gray-400"
                     }`}
                   >
@@ -174,11 +175,11 @@ export default function Subjects() {
                     onChange={(e) => setNewTopic(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && handleAddTopic()}
                     placeholder="e.g. Loops"
-                    className="flex-1 border rounded-lg px-3 py-2 text-sm outline-none focus:border-black"
+                    className="flex-1 border rounded-lg px-3 py-2 text-sm outline-none focus:border-[var(--brand)]"
                   />
                   <button
                     onClick={handleAddTopic}
-                    className="rounded-lg bg-black text-white px-4 text-sm hover:opacity-90"
+                    className="rounded-lg bg-[var(--brand)] text-white px-4 text-sm hover:opacity-90"
                   >
                     Add
                   </button>

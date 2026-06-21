@@ -80,7 +80,7 @@ export default function AddQuestion() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4">
+    <div className="min-h-screen bg-[var(--paper)] py-8 px-4">
     <div className="mx-auto max-w-2xl rounded-2xl border bg-white p-8 shadow-sm">
 
       <div className="flex items-center justify-between mb-1">
@@ -111,7 +111,7 @@ export default function AddQuestion() {
             value={question}
             onChange={(e) => setQuestion(e.target.value)}
             placeholder="Enter the question"
-            className="w-full rounded-lg border px-3 py-2 outline-none focus:border-black"
+            className="w-full rounded-lg border px-3 py-2 outline-none focus:border-[var(--brand)]"
             rows={3}
           />
         </label>
@@ -126,7 +126,7 @@ export default function AddQuestion() {
                   value={val as string}
                   onChange={(e) => (setter as any)(e.target.value)}
                   placeholder={`Enter option ${label}`}
-                  className="w-full rounded-lg border px-3 py-2 outline-none focus:border-black"
+                  className="w-full rounded-lg border px-3 py-2 outline-none focus:border-[var(--brand)]"
                 />
               </label>
             )
@@ -140,7 +140,7 @@ export default function AddQuestion() {
             <select
               value={correct}
               onChange={(e) => setCorrect(e.target.value)}
-              className="w-full rounded-lg border px-3 py-2 outline-none focus:border-black bg-white"
+              className="w-full rounded-lg border px-3 py-2 outline-none focus:border-[var(--brand)] bg-white"
             >
               <option value="A">Option A</option>
               <option value="B">Option B</option>
@@ -156,7 +156,7 @@ export default function AddQuestion() {
               min={1}
               value={points}
               onChange={(e) => setPoints(Number(e.target.value))}
-              className="w-full rounded-lg border px-3 py-2 outline-none focus:border-black"
+              className="w-full rounded-lg border px-3 py-2 outline-none focus:border-[var(--brand)]"
             />
           </label>
         </div>
@@ -171,7 +171,7 @@ export default function AddQuestion() {
             <select
               value={topicId}
               onChange={(e) => setTopicId(e.target.value)}
-              className="w-full rounded-lg border px-3 py-2 outline-none focus:border-black bg-white"
+              className="w-full rounded-lg border px-3 py-2 outline-none focus:border-[var(--brand)] bg-white"
             >
               {topics.length === 0 && <option value="">General</option>}
               {topics.map((t) => (
@@ -188,7 +188,7 @@ export default function AddQuestion() {
             <select
               value={difficultyLevel}
               onChange={(e) => setDifficultyLevel(e.target.value)}
-              className="w-full rounded-lg border px-3 py-2 outline-none focus:border-black bg-white"
+              className="w-full rounded-lg border px-3 py-2 outline-none focus:border-[var(--brand)] bg-white"
             >
               <option value="Easy">Easy</option>
               <option value="Medium">Medium</option>
@@ -202,7 +202,7 @@ export default function AddQuestion() {
           <button
             onClick={addQuestion}
             disabled={loading}
-            className="w-full rounded-lg bg-black px-4 py-3 font-medium text-white hover:opacity-90 disabled:opacity-50"
+            className="w-full rounded-lg bg-[var(--brand)] px-4 py-3 font-medium text-white hover:opacity-90 disabled:opacity-50"
           >
             {loading ? "Adding..." : "Add Question"}
           </button>

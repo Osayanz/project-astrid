@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { api } from "../../lib/api/client";
+import FeedbackPrompt from "../../components/FeedbackPrompt";
+
 
 type PredictionResult = {
   predicted_final_score: number;
@@ -47,6 +49,7 @@ function getSuggestion(topic: string): string {
 export default function QuizResult() {
   const location = useNavigate() && useLocation();
   const navigate  = useNavigate();
+  const { id: quizId } = useParams();
   const state     = (location as any).state ?? {};
 
   const attemptId      = state.attempt_id;
@@ -82,7 +85,7 @@ export default function QuizResult() {
   const strongTopics = prediction?.strong_topics ?? [];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[var(--paper)]">
 
       {/* ── header ── */}
       <div className="bg-white border-b px-6 py-4 flex items-center justify-between">
@@ -116,7 +119,7 @@ export default function QuizResult() {
           {/* progress bar */}
           <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
             <div
-              className="h-2 rounded-full bg-black transition-all duration-500"
+              className="h-2 rounded-full bg-[var(--brand)] transition-all duration-500"
               style={{ width: `${scorePct}%` }}
             />
           </div>
@@ -220,11 +223,10 @@ export default function QuizResult() {
             </div>
           </div>
         )}
-
-        {/* ── actions ── */}
+        <FeedbackPrompt context="quiz_completed" quizId={quizId} />
         <button
           onClick={() => navigate("/dashboard")}
-          className="w-full rounded-xl bg-black text-white py-3 font-medium hover:opacity-90"
+          className="w-full rounded-xl bg-[var(--brand)] text-white py-3 font-medium hover:opacity-90"
         >
           Back to dashboard
         </button>

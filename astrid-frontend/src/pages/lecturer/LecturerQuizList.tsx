@@ -12,13 +12,13 @@ export default function LecturerQuizList() {
   });
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-[var(--paper)] p-6">
       <AppHeader title="My Quiz" />
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <div className="flex items-center justify-between mb-6">
           <button
             onClick={() => navigate("/create-quiz")}
-            className="bg-black text-white px-4 py-2 rounded-lg hover:opacity-90"
+            className="bg-[var(--brand)] text-white px-4 py-2 rounded-lg hover:opacity-90"
           >
             Create Quiz
           </button>
@@ -59,7 +59,7 @@ export default function LecturerQuizList() {
               <div className="flex flex-wrap gap-3 mt-4">
                 <button
                   onClick={() => navigate(`/add-question/${quiz.id}`)}
-                  className="bg-black text-white px-4 py-2 rounded-lg hover:opacity-90"
+                  className="bg-[var(--brand)] text-white px-4 py-2 rounded-lg hover:opacity-90"
                 >
                   Add Questions
                 </button>
